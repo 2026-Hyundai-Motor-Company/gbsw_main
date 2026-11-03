@@ -1,4 +1,4 @@
-package com.example.gbsw.shared
+package com.example.gbsw.shared.service
 
 import androidx.car.app.CarAppService
 import androidx.car.app.Session

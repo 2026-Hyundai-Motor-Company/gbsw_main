@@ -1,4 +1,6 @@
-package com.example.gbsw.shared
+package com.example.gbsw.shared.service
+
+import com.example.gbsw.shared.view.MyCarAppScreen
 
 import android.content.Intent
 import androidx.car.app.Screen

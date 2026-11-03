@@ -18,4 +18,7 @@ android {
 }
 dependencies {
     implementation libs.androidx.app
+    // ViewModel + StateFlow(코루틴 포함), Screen에서 상태 구독할 때 사용
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.lifecycle.runtime.ktx.new
 }
