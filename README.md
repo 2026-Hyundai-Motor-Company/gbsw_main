@@ -25,7 +25,7 @@
 ## 실행
 
 - AGP 9.5.0, Kotlin 2.2.10, compile/targetSdk 37.
-- 차량/공유 모듈 minSdk 34: 검증에 사용한 Pleos Connect 2.1.0 에뮬레이터(Android API 34 / Car API 4)와 호환한다. 화면은 Pleos 앱 영역 1682×1210px를 기준으로 확인했다.
+- 차량/공유 모듈 minSdk 34: 검증에 사용한 Pleos Connect 2.1.0 에뮬레이터(Android API 34 / Car API 4)와 호환한다. 화면은 Pleos 앱 영역 1682×1210px를 기준으로 확인했다. 에뮬레이터 전체 해상도는 2560×1440px·160dpi다.
 - Android Studio에서 `automotive` 구성으로 차량 에뮬레이터에서 실행한다.
 - 우측 상단 `설정`에서 속도·위치·캘린더·알림 권한을 연결한다. 거부해도 나머지 기능은 사용할 수 있다. 같은 화면에서 주간·야간 테마와 경고음·아이콘을 설정한다.
 - 위치를 켠 뒤 `휴게소 찾기` 또는 `볼거리`를 연다. 장소 조회에는 인터넷 연결이 필요하다.
@@ -55,6 +55,8 @@
 ```
 
 운전 시간·정차·오래된 신호·과속·재알림·복원·지리 계산·일정 선택·HTTP 응답/캐시 회귀 테스트가 포함되어 있다. 디버그 APK는 `automotive/build/outputs/apk/debug/automotive-debug.apk`, 서명 전 릴리스 APK는 `automotive/build/outputs/apk/release/automotive-release-unsigned.apk`에 생성된다.
+
+바로 설치할 수 있는 릴리스 APK는 [`apk/GBSW_모바_release.apk`](<apk/GBSW_모바_release.apk>)에 있다. 테스트용 디버그 키로 서명했으며 `adb install -r "apk/GBSW_모바_release.apk"`로 설치한다.
 
 ## 협업
 
