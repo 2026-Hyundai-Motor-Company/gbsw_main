@@ -11,7 +11,7 @@ composeBom = "2026.02.01"
 appcompat = "1.6.1"
 appProjected = "1.4.0"
 appAutomotive = "1.7.0"
-app = "1.4.0"
+app = "1.7.0"
 lifecycle = "2.9.4"
 
 [libraries]

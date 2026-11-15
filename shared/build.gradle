@@ -6,7 +6,7 @@ android {
     compileSdk 37
 
     defaultConfig {
-        minSdk 35
+        minSdk 34
         targetSdk 37
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -15,10 +15,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    buildFeatures {
+        buildConfig true
+    }
 }
 dependencies {
     implementation libs.androidx.app
     // ViewModel + StateFlow(코루틴 포함), Screen에서 상태 구독할 때 사용
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.androidx.lifecycle.runtime.ktx.new
+    testImplementation libs.junit
+    testImplementation 'org.json:json:20240303'
 }

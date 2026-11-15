@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="H3 / Ghost artwork">
+<path id="body" d="M64 10.6667C33.3333 10.6667 16 34.6667 16 65.3333V117.333L32 104L48 117.333L64 104L80 117.333L96 104L112 117.333V65.3333C112 34.6667 94.6667 10.6667 64 10.6667Z" fill="white"/>
+<ellipse id="eye" cx="47.3333" cy="58" rx="6" ry="8.66667" fill="#FF4339"/>
+<ellipse id="eye_2" cx="80.6667" cy="58" rx="6" ry="8.66667" fill="#FF4339"/>
+</g>
+</svg>

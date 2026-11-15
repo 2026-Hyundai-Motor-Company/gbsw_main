@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/cal">
+<path id="Vector" d="M7.5 6H28.5C29.2956 6 30.0587 6.31607 30.6213 6.87868C31.1839 7.44129 31.5 8.20435 31.5 9V30C31.5 30.7956 31.1839 31.5587 30.6213 32.1213C30.0587 32.6839 29.2956 33 28.5 33H7.5C6.70435 33 5.94129 32.6839 5.37868 32.1213C4.81607 31.5587 4.5 30.7956 4.5 30V9C4.5 8.20435 4.81607 7.44129 5.37868 6.87868C5.94129 6.31607 6.70435 6 7.5 6Z" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="#44464E"/>
+<path id="Vector_2" d="M24 3V9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="#44464E"/>
+<path id="Vector_3" d="M12 3V9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="#44464E"/>
+<path id="Vector_4" d="M4.5 15H31.5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="#44464E"/>
+</g>
+</svg>

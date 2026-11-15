@@ -1,37 +1,62 @@
 # GBSW
 
-차량(Android Automotive OS) 전용 앱. Car App Library 기반, MVVM 구조.
+장거리 운전자의 운전 시간과 위험 상태를 보여주고 휴게소 안내로 연결하는 Android Automotive OS 앱이다. 차량 런처는 Figma의 `I · Glass — 하단 탐색`을 구현한 네이티브 Jetpack Compose 화면으로 진입한다. Kotlin, StateFlow를 사용하며 기존 CAL 진입점도 유지한다.
 
 ## 모듈
 
 | 모듈 | 역할 |
 |---|---|
-| `:automotive` | 차량용 앱 진입점 (`CarAppActivity`). 코드는 거의 없고 매니페스트 위주 |
-| `:shared` | 실제 로직. Car App Service/Session/Screen, 이후 Model·ViewModel도 여기에 둠 |
-| `:mobile` | Android Studio 기본 템플릿(Compose). 차량 전용이라 현재 사용하지 않음 |
+| `:automotive` | 네이티브 AAOS DashboardActivity, Figma 화면·토큰·에셋, 차량 속도와 화면 상태 연결 |
+| `:shared` | 검증된 운전 상태·위치·장소·캘린더 어댑터·경고·알림, 기존 CAL 화면 |
+| `:mobile` | 기존 휴대폰 템플릿. 차량 전용 범위에서 사용하지 않음 |
 
-## MVVM 구조 (계획)
+## 구현한 흐름
 
+- 차량 속도로 운전 시간 측정 → 2시간 휴식 권고 → 휴게소 선택 → 기본 내비게이션 전달.
+- 10분 연속 정차 시 운전 시간 초기화. 속도 누락 시 측정/과속 판정을 멈춘다.
+- GPS 기준 휴게소·볼거리 조회, 거리 정렬, 권한·로딩·빈 결과·네트워크 오류와 재시도.
+- 오늘의 다음 장소 일정 조회 → 사용자가 확인한 경우에만 길안내.
+- 화면·짧은 경고음·귀신 아이콘·시스템 알림, 원인별 재알림 제한.
+- 경고음/아이콘 설정, 실제 운전 기록 복원, 시연 데이터 분리.
+- 제조사 전용 실제 졸음 센서·계기판 제어는 앱 내 경고와 시연으로 대체한다.
+
+요구사항별 구현과 실제 검증 범위는 [구현 현황](docs/IMPLEMENTATION.md)을 참고한다. [PRD](docs/PRD.md)는 기획 원문이며, [Figma 홈](https://www.figma.com/design/d5rBNyBSthrjzbVtOfryYr?node-id=150-3211)은 정보 구조의 기준이다.
+
+## 실행
+
+- AGP 9.5.0, Kotlin 2.2.10, compile/targetSdk 37.
+- 차량/공유 모듈 minSdk 34: 설치된 Pleos Connect 2.1.0 이미지와 호환한다.
+- Android Studio에서 `automotive` 구성으로 차량 에뮬레이터에서 실행한다.
+- 우측 상단 `설정`에서 속도·위치·캘린더·알림 권한을 연결한다. 거부해도 나머지 기능은 사용할 수 있다. 같은 화면에서 주간·야간 테마와 경고음·아이콘을 설정한다.
+- 위치를 켠 뒤 `휴게소 찾기` 또는 `볼거리`를 연다. 장소 조회에는 인터넷 연결이 필요하다.
+- 실제 장소 데이터는 OSM Overpass를 사용한다. 현재 환경에서는 공개 서버가 406/타임아웃을 반환해 실제 결과 검증이 제한된다.
+- 네이티브 화면은 4개 하단 탭, 블러를 적용한 유리 표면, 운전 카드, 목록과 지도 1:1 배치를 직접 그린다. 1280px 가로 그리드를 유지하며 카드·목록·지도의 높이는 실제 차량 앱 높이에 맞춘다. 홈은 운전·휴식 요약을 상단에, 휴게소·일정을 하단에 나란히 배치한다. 헤더는 상단, 탭바는 화면 하단 24dp에 고정하고 본문은 각 화면의 정보량에 맞춰 배치한다. 큰 글씨에서는 홈 카드가 세로로 재배치되고 스크롤된다.
+- 기본 화면은 화이트다. 휴게소·볼거리는 이름·거리·길안내 순서로 읽고, 일정은 시간·제목·목적지·길안내를 한 카드에 묶는다. 레퍼런스와 자간·행간 기준은 [화이트 UI 설계](docs/WHITE_UI.md)에 정리했다.
+- 실제 지도는 현재 위치와 조회 결과를 기준으로 보이는 OSM 타일만 받아 7일 캐시한다. 디버그 시연 지도는 Figma에서 받은 원본 예시 에셋이다. 시연 지도는 실제 경로나 차량 위치가 아니다.
+
+## 시연
+
+디버그 빌드의 `설정 → 디자인 시연`에서 Figma 예시 데이터로 시작한다. `개발용 시연 도구`에는 경고·정차·실패 상태가 있다. 실제 운전 기록과 분리된다.
+
+- 디자인 시연은 Figma와 같은 1시간 12분·85 km/h 예시로 시작한다.
+- 운전 시간: 30분/2시간으로 설정.
+- 속도: 101 km/h/정보 없음.
+- 졸음 입력·해제.
+- 정차: 9분, 1분 더.
+- 장소 없음, 위치/네트워크 오류, 길안내 앱 없음, 캘린더 권한 거부/일정 없음.
+- 시연 종료 시 실제 기록으로 돌아간다. 릴리스에는 시연 진입 경로가 없다.
+
+기존 CAL 시연 화면에는 추가적인 수동 값 조절도 남아 있다. 런처 화면은 네이티브 구현을 사용한다.
+
+## 검증
+
+```sh
+./gradlew :automotive:assembleDebug :automotive:assembleRelease :shared:testDebugUnitTest :automotive:lintDebug
 ```
-:shared
- ├─ model/       데이터 클래스, Repository
- ├─ viewmodel/   화면 상태와 로직
- ├─ view/        Car App Screen (화면)
- └─ service/     MyCarAppService, MyCarAppSession
-```
 
-- **View**: `Screen`이 화면을 그리고 ViewModel의 상태만 보여줌
-- **ViewModel**: 화면에 필요한 상태와 동작을 관리
-- **Model**: 데이터와 Repository
-- **Service**: Car App 호스트와 연결되는 진입점
+운전 시간·정차·오래된 신호·과속·재알림·복원·지리 계산·일정 선택·HTTP 응답/캐시 회귀 테스트가 포함되어 있다. 디버그 APK는 `automotive/build/outputs/apk/debug/automotive-debug.apk`, 서명 전 릴리스 APK는 `automotive/build/outputs/apk/release/automotive-release-unsigned.apk`에 생성된다.
 
-## 개발 환경
+## 협업
 
-- AGP 9.5.0, Kotlin 2.2.10
-- minSdk 35, targetSdk 37
-- Android Studio에서 `automotive` 구성으로 Automotive 에뮬레이터에서 실행
-
-## 협업 규칙
-
-- `main`에 직접 푸시하지 않고 기능별 브랜치 + PR
-- `local.properties`는 커밋하지 않음
+- `main` 직접 푸시 대신 기능 브랜치와 PR을 사용한다.
+- `local.properties`와 키 파일은 커밋하지 않는다.
