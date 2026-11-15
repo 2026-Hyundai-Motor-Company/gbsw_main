@@ -1,6 +1,6 @@
-# GBSW
+# 모바
 
-장거리 운전자의 운전 시간과 위험 상태를 보여주고 휴게소 안내로 연결하는 Android Automotive OS 앱이다. 차량 런처는 Figma의 `I · Glass — 하단 탐색`을 구현한 네이티브 Jetpack Compose 화면으로 진입한다. Kotlin, StateFlow를 사용하며 기존 CAL 진입점도 유지한다.
+모바는 장거리 운전자의 운전 시간과 위험 상태를 보여주고 휴게소 안내로 연결하는 Android Automotive OS 앱이다. GBSW 팀이 개발한다. 차량 런처는 Figma의 `I · Glass — 하단 탐색`을 구현한 네이티브 Jetpack Compose 화면으로 진입한다. Kotlin, StateFlow를 사용하며 기존 CAL 진입점도 유지한다.
 
 ## 모듈
 
